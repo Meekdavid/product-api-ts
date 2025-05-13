@@ -1,6 +1,6 @@
-# TrueStoryAPI 🚀
+# ProductsAPI 🚀
 
-A robust RESTful Web API built with **.NET 8.0** that extends the [Restful-API.dev](https://api.restful-api.dev) mock service with advanced features:
+A robust RESTful Web API built with **.NET 8.0** that extends the [Restful-API.dev](https://api.restful-api.dev) mock service with the features:
 - ✨ **Filtering** & **Pagination**
 - ✅ **Data Validation**
 - 🔄 **Full CRUD Operations**
