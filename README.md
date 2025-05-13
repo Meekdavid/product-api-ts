@@ -195,5 +195,4 @@ We welcome contributions! Please follow these steps:
 
 None
 
-Permission is hereby granted... [standard MIT text]
 ```
