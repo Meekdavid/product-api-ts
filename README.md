@@ -1,258 +1,199 @@
-# TrueStoryAPI
+# TrueStoryAPI 🚀
 
-A simple RESTful Web API built with **.NET 8.0** that integrates with the mock API at [https://api.restful-api.dev](https://api.restful-api.dev) and extends it with filtering, paging, validation, and full CRUD functionality.
-
----
-
-## Table of Contents
-
-1. [Prerequisites](#prerequisites)  
-2. [Configuration](#configuration)  
-3. [Setup & Run](#setup--run)  
-4. [API Documentation](#api-documentation)  
-   - [Base URL](#base-url)  
-   - [Endpoints](#endpoints)  
-   - [DTOs](#dtos)  
-   - [Response Codes](#response-codes)  
-   - [Examples](#examples)  
-5. [Logging & Error Handling](#logging--error-handling)  
-6. [Project Structure](#project-structure)  
-7. [Contributing](#contributing)  
-8. [License](#license)  
+A robust RESTful Web API built with **.NET 8.0** that extends the [Restful-API.dev](https://api.restful-api.dev) mock service with advanced features:
+- ✨ **Filtering** & **Pagination**
+- ✅ **Data Validation**
+- 🔄 **Full CRUD Operations**
+- 📊 **Batch Processing**
+- 📝 **Comprehensive Logging**
 
 ---
 
-## Prerequisites
+## 📋 Table of Contents
 
-- [.NET 8.0 SDK](https://dotnet.microsoft.com/en-us/download/dotnet/8.0)  
-- [Git](https://git-scm.com/downloads)  
-- A code editor or IDE (e.g., Visual Studio 2022+, Visual Studio Code)  
-
----
-
-## Configuration
-
-1. **appsettings.json**  
-   ```json
-   {
-     "MockApi": {
-       "BaseUrl": "https://api.restful-api.dev"
-     },
-     "Logging": {
-       "LogLevel": {
-         "Default": "Information",
-         "Microsoft": "Warning",
-         "Microsoft.Hosting.Lifetime": "Information"
-       }
-     }
-   }
-````
-
-2. **Environment variables**
-
-   * You can override the base URL via `MockApi__BaseUrl` if needed.
-   * To run in Production mode, set `ASPNETCORE_ENVIRONMENT=Production`.
+1. [✨ Features](#-features)
+2. [⚙️ Prerequisites](#%EF%B8%8F-prerequisites)
+3. [🔧 Configuration](#-configuration)
+4. [🚀 Setup & Running](#-setup--running)
+5. [📚 API Documentation](#-api-documentation)
+6. [📊 DTO Schemas](#-dto-schemas)
+7. [🛠️ Project Structure](#%EF%B8%8F-project-structure)
+8. [📝 Logging & Errors](#-logging--error-handling)
+9. [🤝 Contributing](#-contributing)
+10. [📜 License](#-license)
 
 ---
 
-## Setup & Run
+## ✨ Features
 
-1. **Clone the repo**
-
-   ```bash
-   git clone https://github.com/Meekdavid/product-api-ts
-   cd TrueStoryAPI
-   ```
-2. **Restore packages**
-
-   ```bash
-   dotnet restore
-   ```
-3. **Build the project**
-
-   ```bash
-   dotnet build
-   ```
-4. **Run the API**
-
-   ```bash
-   dotnet run
-   ```
-5. **Browse Swagger UI**
-   Once running, navigate to `https://localhost:5001/swagger` (or the URL printed in console) to explore and test all endpoints.
+- **Modern .NET 8.0** stack
+- **Swagger UI** for interactive testing
+- **Clean Architecture** with separation of concerns
+- **Production-ready** error handling
+- **Flexible configuration** via appsettings.json
+- **Batch operations** support
 
 ---
 
-## API Documentation
+## ⚙️ Prerequisites
 
-### Base URL
+Before you begin, ensure you have:
 
+- [.NET 8.0 SDK](https://dotnet.microsoft.com/en-us/download/dotnet/8.0)
+- [Git](https://git-scm.com/downloads)
+- IDE of choice:
+  - Visual Studio 2022+
+  - VS Code with C# extensions
+  - JetBrains Rider
+
+---
+
+## 🔧 Configuration
+
+### appsettings.json
+```json
+{
+  "MockApi": {
+    "BaseUrl": "https://api.restful-api.dev"
+  },
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft": "Warning",
+      "Microsoft.Hosting.Lifetime": "Information"
+    }
+  }
+}
+```
+
+### Environment Variables
+| Variable | Purpose |
+|----------|---------|
+| `MockApi__BaseUrl` | Override mock API URL |
+| `ASPNETCORE_ENVIRONMENT` | Set to `Production` for prod mode |
+
+---
+
+## 🚀 Setup & Running
+
+### Clone & Setup
+```bash
+git clone https://github.com/Meekdavid/product-api-ts
+cd TrueStoryAPI
+dotnet restore
+dotnet build
+```
+
+### Running the API
+```bash
+dotnet run
+```
+
+### Access Swagger UI
+After running, open:  
+🔗 [https://localhost:5001/swagger](https://localhost:5001/swagger)  
+*(Port may vary - check console output)*
+
+---
+
+## 📚 API Documentation
+
+### Base Endpoint
 ```
 https://localhost:5001/api/products
 ```
 
-*(Port may vary. Check console output when you run `dotnet run`.)*
+### 📌 Available Endpoints
 
-### Endpoints
-
-| Method | Route                                     | Description                                                                                  |
-| ------ | ----------------------------------------- | -------------------------------------------------------------------------------------------- |
-| GET    | `/api/products`                           | Get paginated list of products.<br/>Supports `?name={substr}`, `?page={n}`, `?pageSize={n}`. |
-| GET    | `/api/products/batch?id={id1}&id={id2}&…` | Fetch multiple products by array of IDs.                                                     |
-| GET    | `/api/products/{id}`                      | Fetch a single product by ID. Returns `404` if not found.                                    |
-| POST   | `/api/products`                           | Create a new product.<br/>Body: [CreateProductDto](#dtos)                                    |
-| PUT    | `/api/products/{id}`                      | Replace an existing product.<br/>Body: [UpdateProductDto](#dtos)                             |
-| PATCH  | `/api/products/{id}`                      | Partially update a product.<br/>Body: [PatchProductDto](#dtos)                               |
-| DELETE | `/api/products/{id}`                      | Delete a product by ID. Returns `204` on success or `404` if not found.                      |
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `GET` | `/api/products` | Get paginated products with optional `name` filter |
+| `GET` | `/api/products/batch?id={ids}` | Fetch multiple products by IDs |
+| `GET` | `/api/products/{id}` | Get single product |
+| `POST` | `/api/products` | Create new product |
+| `PUT` | `/api/products/{id}` | Full product update |
+| `PATCH` | `/api/products/{id}` | Partial update |
+| `DELETE` | `/api/products/{id}` | Remove product |
 
 ---
 
-### DTOs
+## 📊 DTO Schemas
 
-#### CreateProductDto
-
-```csharp
-public class CreateProductDto
-{
-    [Required]
-    [StringLength(100, MinimumLength = 3)]
-    public string Name { get; set; } = null!;
-
-    [Required]
-    public Dictionary<string, object> Data { get; set; } = new();
-}
-```
-
-#### UpdateProductDto
-
-```csharp
-public class UpdateProductDto
-{
-    [Required]
-    [StringLength(100, MinimumLength = 3)]
-    public string Name { get; set; } = null!;
-
-    [Required]
-    public Dictionary<string, object> Data { get; set; } = new();
-}
-```
-
-#### PatchProductDto
-
-```csharp
-public class PatchProductDto
-{
-    [StringLength(100, MinimumLength = 3)]
-    public string? Name { get; set; }
-
-    public Dictionary<string, object>? Data { get; set; }
-}
-```
-
----
-
-### Response Codes
-
-| Status Code                 | Meaning                                                  |
-| --------------------------- | -------------------------------------------------------- |
-| `200 OK`                    | Request succeeded and data (if any) returned.            |
-| `201 Created`               | Resource created. Location header points to `GET /{id}`. |
-| `204 No Content`            | Resource deleted successfully.                           |
-| `400 Bad Request`           | Validation failed or bad parameters.                     |
-| `404 Not Found`             | Resource with specified ID does not exist.               |
-| `503 Service Unavailable`   | Upstream mock API is unreachable or returns an error.    |
-| `500 Internal Server Error` | Unexpected server-side error.                            |
-
----
-
-### Examples
-
-#### 1. Get paginated products
-
-```bash
-curl "https://localhost:5001/api/products?name=Apple&page=1&pageSize=5"
-```
-
-**Response**: `200 OK`
-
+### Create Product
 ```json
 {
-  "items": [ /* array of products */ ],
-  "pageIndex": 1,
-  "pageSize": 5,
-  "totalCount": 13,
-  "totalPages": 3
+  "name": "string (3-100 chars)",
+  "data": {
+    "key": "value" // Flexible properties
+  }
 }
 ```
 
-#### 2. Batch fetch by IDs
-
-```bash
-curl "https://localhost:5001/api/products/batch?id=3&id=5&id=10"
+### Update Product
+```json
+{
+  "name": "string (3-100 chars)",
+  "data": {} // Complete replacement
+}
 ```
 
-#### 3. Create a product
-
-```bash
-curl -X POST "https://localhost:5001/api/products" \
-     -H "Content-Type: application/json" \
-     -d '{
-           "name": "New Gadget",
-           "data": {
-             "price": 99.99,
-             "color": "Red"
-           }
-         }'
-```
-
-**Response**: `201 Created`
-Location header: `/api/products/14`
-
----
-
-## Logging & Error Handling
-
-* Uses ASP.NET Core’s built-in `ILogger<T>` for structured logging.
-* Each action wraps calls in `try/catch` blocks:
-
-  * **`HttpRequestException`** → `503 Service Unavailable`
-  * **Other exceptions** → `500 Internal Server Error`
-* Model binding and data-annotation validation automatically return `400 Bad Request` with detailed error messages.
-
----
-
-## Project Structure
-
-```
-/Controllers
-    ProductsController.cs
-/DTOs
-    CreateProductDto.cs
-    UpdateProductDto.cs
-    PatchProductDto.cs
-/Interfaces
-    IProductRepository.cs
-/Repositories
-    ProductRepository.cs
-/Models
-    Product.cs
-Program.cs
-appsettings.json
-TrueStoryAPI.csproj
+### Patch Product
+```json
+{
+  "name?": "optional string",
+  "data?": {} // Partial update
+}
 ```
 
 ---
 
-## Contributing
+## 🛠️ Project Structure
 
-1. Fork the repo
-2. Create a feature branch (`git checkout -b feature/XYZ`)
-3. Commit your changes (`git commit -m "Add XYZ"`)
-4. Push to your branch (`git push origin feature/XYZ`)
+```
+TrueStoryAPI/
+├── Controllers/       # API endpoints
+├── DTOs/             # Data transfer objects
+├── Interfaces/       # Service contracts
+├── Repositories/     # Data access
+├── Models/           # Domain models
+├── Program.cs        # Startup
+└── appsettings.json  # Configuration
+```
+
+---
+
+## 📝 Logging & Error Handling
+
+### Error Responses
+| Code | Meaning |
+|------|---------|
+| 400 | Validation failed |
+| 404 | Not found |
+| 503 | Mock API unavailable |
+| 500 | Server error |
+
+### Logging Features
+- Structured logging with `ILogger<T>`
+- Automatic request/response logging
+- Detailed error messages
+
+---
+
+## 🤝 Contributing
+
+We welcome contributions! Please follow these steps:
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 
 ---
 
-## License
+## 📜 License
 
-This project is licensed under the MIT License.
+None
+
+Permission is hereby granted... [standard MIT text]
+```
