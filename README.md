@@ -1,4 +1,3 @@
-````markdown
 # TrueStoryAPI
 
 A simple RESTful Web API built with **.NET 8.0** that integrates with the mock API at [https://api.restful-api.dev](https://api.restful-api.dev) and extends it with filtering, paging, validation, and full CRUD functionality.
@@ -61,7 +60,7 @@ A simple RESTful Web API built with **.NET 8.0** that integrates with the mock A
 1. **Clone the repo**
 
    ```bash
-   git clone https://github.com/your-org/TrueStoryAPI.git
+   git clone https://github.com/Meekdavid/product-api-ts
    cd TrueStoryAPI
    ```
 2. **Restore packages**
@@ -257,6 +256,3 @@ TrueStoryAPI.csproj
 ## License
 
 This project is licensed under the MIT License.
-
-```
-```
